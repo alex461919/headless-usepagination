@@ -1,46 +1,92 @@
-# Getting Started with Create React App
+# React pagination hook
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Простой, без визуального представленя, hook usePagination.
 
-## Available Scripts
+Немного передаланный алгоритм взят отсюда [https://github.com/mayankshubham/react-pagination](https://github.com/mayankshubham/react-pagination).
 
-In the project directory, you can run:
+Параметры стандартные:
 
-### `npm start`
+```tsx
+interface IPaginationParams {
+  totalCount: number; // Общее количество записей
+  pageSize: number; // Количество записей на страниу
+  currentPage: number; // Текущая страница
+  siblingCount?: number; // Количество соседей слева.права от активной страницы(default: 2)
+}
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Возвращает массив элементов:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```tsx
+interface IPaginationItem {
+  type: "page" | "dots";
+  pageN: number;
+}
+```
 
-### `npm test`
+У точек тоже есть номер страницы, можно их показать кликабельными.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Install
 
-### `npm run build`
+`npm install git+https://github.com/alex461919/headless-usepagination.git`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Example
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```tsx
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css"; // npm install bootstrap
+import { usePagination } from "headless-usepagination";
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+function App() {
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const pagination = usePagination({
+    totalCount: 200,
+    pageSize: 10,
+    siblingCount: 2,
+    currentPage,
+  });
+  const clickHandler = React.useCallback<React.MouseEventHandler<HTMLElement>>(
+    (event) => {
+      const page = Number((event.target as HTMLElement).dataset.page);
+      page && setCurrentPage(page);
+    },
+    [setCurrentPage]
+  );
 
-### `npm run eject`
+  return (
+    <div className="container">
+      <div className="row flex-column align-items-center">
+        <div className="col-auto my-5">
+          {pagination.length && (
+            <nav aria-label="Pagination">
+              <ul className="pagination" onClick={clickHandler}>
+                {pagination.map((item) => {
+                  return (
+                    <li
+                      key={item.pageN}
+                      className={`page-item${
+                        item.pageN === currentPage ? " active" : ""
+                      }`}
+                    >
+                      <a
+                        className="page-link"
+                        data-page={item.pageN}
+                        href={"#" + item.pageN}
+                      >
+                        {item.type === "dots" ? "..." : item.pageN}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          )}
+        </div>
+        <div className="col-auto my-5 fs-1">{currentPage}</div>
+      </div>
+    </div>
+  );
+}
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+export default App;
+```
