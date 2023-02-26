@@ -5,9 +5,9 @@
   "author": "Alex Didenko",
   "license": "MIT",
   "description": "Data pagination hooks for react",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/esm/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alex461919/headless-usepagination.git"
