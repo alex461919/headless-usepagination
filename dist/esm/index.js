@@ -25,7 +25,7 @@ export function usePagination(params) {
         var totalPageCount = Math.ceil(totalCount / pageSize);
         if (totalPageCount > 1) {
             // Pages count is determined as siblingCount + firstPage + lastPage + currentPage + 2*DOTS
-            var totalPageNumbers = siblingCount + 5;
+            var totalPageNumbers = siblingCount * 2 + 5;
             /*
             If the number of pages is less than the page numbers we want to show in our
             paginationComponent, we return the range [1..totalPageCount]

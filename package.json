@@ -38,7 +38,7 @@
     "typescript": "^4.9.5"
   },
   "scripts": {
-    "build": "yarn build:esm && yarn build:cjs",
+    "build": "npm run build:esm && npm run build:cjs",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs",
     "prepare": "npm run build"
@@ -47,18 +47,6 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
     ]
   }
 }
