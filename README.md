@@ -64,9 +64,11 @@ function App() {
                   return (
                     <li
                       key={item.pageN}
-                      className={`page-item${
-                        item.pageN === currentPage ? " active" : ""
-                      }`}
+                      className={
+                        item.pageN === currentPage
+                          ? "page-item active"
+                          : "page-item"
+                      }
                     >
                       <a
                         className="page-link"
