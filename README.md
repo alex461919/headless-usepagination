@@ -47,6 +47,7 @@ function App() {
   });
   const clickHandler = React.useCallback<React.MouseEventHandler<HTMLElement>>(
     (event) => {
+      event.preventDefault();
       const page = Number((event.target as HTMLElement).dataset.page);
       page && setCurrentPage(page);
     },
