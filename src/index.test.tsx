@@ -15,6 +15,9 @@ test("Active page start", () => {
   });
   expect(pageItems.length).toBe(9);
   expect(pageItems.filter((item) => item.type === "dots").length).toBe(1);
+  expect(pageItems.flatMap((item) => item.pageN)).toEqual([
+    1, 2, 3, 4, 5, 6, 7, 14, 20,
+  ]);
 });
 test("Active page end", () => {
   const pageItems = setup({
