@@ -54,5 +54,5 @@ test("Without dots", () => {
     siblingCount: 2,
   });
   expect(pageItems.length).toBe(3);
-  expect(pageItems.filter((item) => item.type === "dots").length).toEqual(0);
+  expect(pageItems.filter((item) => item.type === "dots")).toEqual([]);
 });
