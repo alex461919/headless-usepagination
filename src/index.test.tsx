@@ -1,14 +1,9 @@
-import { IPaginationItem, IPaginationParams, usePagination } from ".";
-import { render } from "@testing-library/react";
+import { IPaginationParams, usePagination } from ".";
+import { renderHook } from "@testing-library/react";
 
 function setup(params: IPaginationParams) {
-  let returnVal: IPaginationItem[] = [];
-  function TestComponent() {
-    returnVal = usePagination(params);
-    return null;
-  }
-  render(<TestComponent />);
-  return returnVal;
+  const { result } = renderHook(() => usePagination(params));
+  return result.current;
 }
 
 test("Active page start", () => {
